@@ -20,6 +20,6 @@ void mod(stack_t **stack, unsigned int line_number)
 		dprintf(2, "L%u: division by zero\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	ptr2->n = (*stack)->n % ptr2->n;
+	ptr2->n = ptr2->n % (*stack)->n;
 	pop(&(*stack), line_number);
 }
