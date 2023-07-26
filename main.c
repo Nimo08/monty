@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	while ((num_chars = getline(&global.line, &n, global.fptr) != -1))
 	{
 		parse_line(global.line);
-		if (global.line_cpy[0] == NULL)
+		if (global.line_cpy[0] == NULL || global.line_cpy[0][0] == '#')
 		{
 			line_num++;
 			continue;
