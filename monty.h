@@ -53,6 +53,7 @@ extern global_t global;
 void (*op_fun(char *s))(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 void parse_line(char *line);
 void exit_status(void);
 
