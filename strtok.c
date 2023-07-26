@@ -7,7 +7,7 @@
 void parse_line(char *line)
 {
 	char *token = NULL;
-	const char *delim = " \t\n";
+	const char *delim = " \t\n\r";
 	int num_tok = 0;
 
 	token = strtok(line, delim);
