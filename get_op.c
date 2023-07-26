@@ -15,8 +15,6 @@ void (*op_fun(char *s))(stack_t **stack, unsigned int line_number)
 
 	while (op_code[i].opcode != NULL)
 	{
-		if (s == NULL)
-			return (NULL);
 		if (strcmp(s, op_code[i].opcode) == 0)
 		{
 			return (op_code[i].f);
