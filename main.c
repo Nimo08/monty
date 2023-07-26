@@ -31,7 +31,6 @@ int main(int argc, char **argv)
 	}
 	while ((num_chars = getline(&global.line, &n, global.fptr) != -1))
 	{
-		line_num++;
 		parse_line(global.line);
 		get_fun = op_fun(global.line_cpy[0]);
 		if (get_fun == NULL)
@@ -40,6 +39,7 @@ int main(int argc, char **argv)
 			exit_status();
 		}
 		get_fun(&global.stack, line_num);
+		line_num++;
 	}
 	ptr = global.stack;
 	while (ptr != NULL)
