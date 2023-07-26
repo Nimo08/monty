@@ -1,9 +1,9 @@
 #include "monty.h"
 /**
  * pall - prints all elements
- * @stack: pointer
+ * @stack: pointer to pointer
  * @line_number: unsigned int
- * Return: number of nodes
+ * Return: nothing
  */
 void pall(stack_t **stack, unsigned int line_number)
 {

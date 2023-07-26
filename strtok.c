@@ -2,7 +2,7 @@
 /**
  * parse_line - tokenize line
  * @line: string to be tokenized
- * Return: tokenized string
+ * Return: nothing
  */
 void parse_line(char *line)
 {
