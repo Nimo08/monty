@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -32,6 +34,26 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-stack_t *pushnode(stack_t **h, const int n);
+/**
+ * struct global - global variables
+ * @line_cpy: char array
+ * @fptr: file ptr
+ * @line: char ptr
+ * @stack: ptr
+ */
+typedef struct global
+{
+	char *line_cpy[20];
+	FILE *fptr;
+	char *line;
+	stack_t *stack;
+} global_t;
+extern global_t global;
+
+void (*op_fun(char *s))(stack_t **stack, unsigned int line_number);
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+void parse_line(char *line);
+void exit_status(void);
 
 #endif /* MONTY_H */

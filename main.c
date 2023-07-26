@@ -1,4 +1,6 @@
 #include "monty.h"
+void empty(void);
+global_t global = {{NULL}, NULL, NULL, NULL};
 /**
  * main - entry point
  * @argc: argument count
@@ -7,36 +9,46 @@
  */
 int main(int argc, char **argv)
 {
-	FILE *fptr;
-	const char *filename = "";
-	char *input = NULL;
+	char *filename;
 	size_t n = 0;
-	int num_chars;
-	int size = atoi(argv[1]);
+	int num_chars = 0;
+	unsigned int line_num = 1;
+	void (*get_fun)(stack_t **, unsigned int);
+	stack_t *ptr;
+	stack_t *temp;
 
+	filename = argv[1];
 	if (argc != 2)
 	{
-		fprintf(stderr, "USAGE: monty file\n");
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	if (size < 1)
+	global.fptr = fopen(filename, "r");
+	if (global.fptr == NULL)
 	{
-		fprintf(stderr, "L<line_number>: unknown instruction <opcode>\n");
+		dprintf(2, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-	fptr = fopen(filename, "r");
-	if (fptr == NULL)
+	while ((num_chars = getline(&global.line, &n, global.fptr) != -1))
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", filename);
-		exit(EXIT_FAILURE);
+		line_num++;
+		parse_line(global.line);
+		get_fun = op_fun(global.line_cpy[0]);
+		if (get_fun == NULL)
+		{
+			dprintf(2, "L%u: unknown instruction %s\n", line_num, global.line_cpy[0]);
+			exit_status();
+		}
+		get_fun(&global.stack, line_num);
 	}
-	num_chars = getline(&input, &n, stdin);
-	if (num_chars == -1)
+	ptr = global.stack;
+	while (ptr != NULL)
 	{
-		free(input);
-		exit(EXIT_FAILURE);
+		temp = ptr->next;
+		free(ptr);
+		ptr = temp;
 	}
-	free(input);
-	fclose(fptr);
+	free(global.line);
+	fclose(global.fptr);
 	return (0);
 }

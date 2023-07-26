@@ -1,35 +1,47 @@
 #include "monty.h"
 /**
- * pushnode - adds an element into the stack or queue
- * @h: pointer to pointer
- * @n: int
- * Return: new node, or NULL if it failed
+ * push - adds an element into the stack or queue
+ * @stack: pointer to pointer
+ * @line_number: unsigned int
+ * Return: nothing
  */
-stack_t *pushnode(stack_t **h, const int n)
+void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *ptr;
 	stack_t *temp;
+	int cnt = 0;
 
 	temp = malloc(sizeof(stack_t));
 	if (temp == NULL)
 	{
-		return (NULL);
+		dprintf(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
-	temp->n = n;
+	if (global.line_cpy[1] == NULL)
+	{
+		free(temp);
+		dprintf(2, "L%u: usage: push integer\n", line_number);
+		exit_status();
+	}
+	if (global.line_cpy[1][0] == '-')
+	{
+		cnt++;
+	}
+	while (global.line_cpy[1][cnt] != '\0')
+	{
+		if (!isdigit(global.line_cpy[1][cnt]))
+		{
+			free(temp);
+			dprintf(2, "L%u: usage: push integer\n", line_number);
+			exit_status();
+		}
+		cnt++;
+	}
+	temp->n = atoi(global.line_cpy[1]);
 	temp->prev = NULL;
-	temp->next = NULL;
-	if (*h == NULL)
+	temp->next = *stack;
+	if (*stack != NULL)
 	{
-		*h = temp;
-		temp->prev = NULL;
-		return (temp);
+		(*stack)->prev = temp;
 	}
-	ptr = *h;
-	while (ptr->next != NULL)
-	{
-		ptr = ptr->next;
-	}
-	ptr->next = temp;
-	temp->prev = ptr;
-	return (temp);
+	*stack = temp;
 }
