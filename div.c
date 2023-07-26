@@ -15,7 +15,7 @@ void _div(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	ptr2 = (*stack)->next;
-	if (*stack == 0)
+	if ((*stack)->n == 0)
 	{
 		dprintf(2, "L%u: division by zero\n", line_number);
 		exit(EXIT_FAILURE);
