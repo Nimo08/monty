@@ -20,6 +20,7 @@ void (*op_fun(char *s))(stack_t **stack, unsigned int line_number)
 		{"mod", mod},
 		{"pchar", pchar},
 		{"pstr", pstr},
+		{"rotl", rotl},
 		{NULL, NULL},
 	};
 	int i = 0;
